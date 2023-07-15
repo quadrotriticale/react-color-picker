@@ -191,3 +191,17 @@ h1 {
 .empty .material-symbols-outlined {
   font-size: 5rem;
 }
+
+
+@media only screen and (max-width: 700px) {
+  .createPalette-header {
+    flex-direction: column;
+  }
+  .colors {
+    flex-direction: column;
+  }
+  .buttons-text {
+    margin-top: 8px;
+    margin-left: 0;
+  }
+}
