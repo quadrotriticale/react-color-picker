@@ -56,6 +56,7 @@ aside {
   display: flex;
   align-items: center;
   background-color: #fff;
+  border-right: 1px solid var(--grey);
 }
 
 nav {
@@ -196,6 +197,8 @@ h1 {
 @media only screen and (max-width: 700px) {
   .createPalette-header {
     flex-direction: column;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
   }
   .colors {
     flex-direction: column;
