@@ -4,7 +4,7 @@ import tinycolor from 'tinycolor2'
 const SavedPalettes = () => {
 
   const [palettes, setPalettes] = useState([]);
-  const [justCopied, setJustCopied] = useState(false);
+  const [justCopied, setJustCopied] = useState([]);
 
   const deletePalette = (id) => {
     const newPalettes = palettes.filter(palette => palette.id != id);
@@ -14,7 +14,10 @@ const SavedPalettes = () => {
   }
 
   const copyToClipboard = (id, index) => {
-    setJustCopied(true);
+    const newJustCopied = palettes.map(palette => {
+      return palette.id == id ? true : false;
+    });
+    setJustCopied(newJustCopied);
     for (let i = 0; i < palettes.length; i++) {
       const pal = palettes[i]
       if (pal.id == id) {
@@ -27,7 +30,7 @@ const SavedPalettes = () => {
   useEffect(() => {
     if (justCopied) {
         const interval = setInterval(() => {
-            setJustCopied(false);
+            setJustCopied(justCopied.map(palette => false));
         }, 1200);
     
         return () => clearInterval(interval);
@@ -50,18 +53,7 @@ const SavedPalettes = () => {
       }
 
       setPalettes(palettes);
-      /* let palettes = [];
-      const strings = JSON.parse(storage);
-      if (strings.length > 1) {
-        for (let i = 0; i < strings.length; i++) {
-          const id = strings[i].id;
-          const colors = strings[i].colors;
-          palettes.push({id, colors})
-        }
-      } else {
-        palettes.push(strings[0]);
-      }
-      setPalettes(palettes); */
+
     }
   }, [])
 
@@ -72,14 +64,14 @@ const SavedPalettes = () => {
         palettes.length >= 1 ? (
           <div className="palettes">
             {
-              palettes.map(palette => {
+              palettes.map((palette, index) => {
                 return (
                 <Palette 
                   id={palette.id} 
                   colors={palette.colors} 
                   deletePalette={deletePalette} 
                   copyToClipboard={copyToClipboard}
-                  justCopied={justCopied}
+                  justCopied={justCopied[index]}
                   key={palette.id} />)
               })
             }
